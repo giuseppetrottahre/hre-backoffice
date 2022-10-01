@@ -17,16 +17,18 @@ import ChangePwd from './utils/changepwd';
 import MyLoginPage from './utils/myloginpage';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import italianMessages from 'ra-language-italian';
+import {httpClient,serverHost} from './utils/constants';
+import {FinalBalance} from './utils/finalBalance.js';
 
 const i18nProvider = polyglotI18nProvider(() => italianMessages, 'it');
-
+/*
 const httpClient = (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: 'application/json' });
   }
   options.credentials = 'include';
   return fetchUtils.fetchJson(url, options);
-};
+};*/
 /*
      <Resource name="artists" label= 'Artisti' list={ArtistList} show={ArtistShow}  edit={ArtistEdit} icon={PaletteIcon}/>,
       <Resource name="suppliers" label= 'Fornitori' list={SupplierList} show={SupplierShow}  edit={SupplierEdit} icon={WorkIcon}/>,
@@ -34,7 +36,7 @@ const httpClient = (url, options = {}) => {
       */
 
 export default function App() {
-  const serverHost = '/v1/backend';
+  //const serverHost = '/v1/backend';
   const backendDataProvider = simpleRestProvider(serverHost, httpClient);
 
   const hreDataProfider = {
@@ -197,6 +199,7 @@ export default function App() {
           <Resource name="clients" options={{ label: 'Clienti' }} list={ClientList} show={ClientShow} create={ClientCreate} edit={ClientEdit} icon={RecentActorsIcon} />,
           <Resource name="events_users" />,
           <Resource name="accounts" options={{ label: 'Account' }} list={AccountList} edit={AccountEdit} create={AccountCreate} icon={AccountBoxIcon} />
+          ,<Resource name="final_balance" options={{ label: 'Consuntivazione' }} list={FinalBalance} />
         ];
         if (permissions === 'user') return [
           <Resource name="users" options={{ label: 'Anagrafica' }} list={UserList} show={UserShow} create={UserCreate} edit={UserEdit} icon={PeopleIcon} />,
@@ -211,6 +214,7 @@ export default function App() {
           <Resource name="users" options={{ label: 'Anagrafica' }} list={UserList} show={UserShow} create={UserCreate} edit={UserEdit} icon={PeopleIcon} />,
           <Resource name="events" options={{ label: 'Posizione lavorativa' }} list={EventList} show={EventShow} create={EventCreate} edit={EventEdit} icon={EventIcon} />,
           <Resource name="events_users" />
+          ,<Resource name="final_balance" options={{ label: 'Consuntivazione' }} list={FinalBalance} />
         ];
 
       }
