@@ -8,23 +8,39 @@ import {
   FileInput,
   FileField,
   DateInput,
-  required,regex,SimpleForm,SaveButton,Toolbar,Button, Notification, useNotify 
+  required,regex,SimpleForm,SaveButton,Toolbar,Button, Notification, useNotify,usePermissions  
 } from 'react-admin';
 import {httpClient,serverHost} from './constants'; 
 import SendIcon from '@material-ui/icons/Send';
 import Typography from '@material-ui/core/Typography';
 
-const CustomToolbar = (props) => (
-  <Toolbar {...props}>
+const CustomToolbar = (props) => {
+    const { permissions } = usePermissions();
+    const notify = useNotify();
+
+  const logfileDownload = () => {
+        var fileDownload = require('js-file-download');
+      return httpClient(`${serverHost}/final_balance_log`, {
+        method: 'GET',
+      }).then(function(resp) {
+          return fileDownload(resp.body, 'import.log');
+          },function(error){notify('ERROR: '+error, { type: 'error' });});
+
+   }
+
+return(
+  <Toolbar {...props} >
 	<SaveButton label="CARICA"/>
+	{permissions === 'admin' &&
+		<Button label="DOWNLOAD LOG" variant="contained" color="secondary" style={{marginLeft:'10px'}} onClick={() => logfileDownload()}/>
+	}
   </Toolbar>
-);
+)};
 
 
 export const FinalBalance = (props) => {
 
     const notify = useNotify();
-
     const upload = data => {
         var fileDownload = require('js-file-download');
         let formData = new FormData();
