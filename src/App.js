@@ -19,6 +19,8 @@ import polyglotI18nProvider from 'ra-i18n-polyglot';
 import italianMessages from 'ra-language-italian';
 import {httpClient,serverHost} from './utils/constants';
 import {FinalBalance} from './utils/finalBalance.js';
+import { UserTimesheetList, UserTimesheetEdit } from './views/users_timesheet';
+import { UserSentimentList, UserSentimentEdit } from './views/users_sentiment';
 
 const i18nProvider = polyglotI18nProvider(() => italianMessages, 'it');
 /*
@@ -200,6 +202,9 @@ export default function App() {
           <Resource name="events_users" />,
           <Resource name="accounts" options={{ label: 'Account' }} list={AccountList} edit={AccountEdit} create={AccountCreate} icon={AccountBoxIcon} />
           ,<Resource name="final_balance" options={{ label: 'Consuntivazione' }} list={FinalBalance} />
+          ,<Resource name="timesheet" options={{ label: 'Timesheet' }} list={UserTimesheetList} edit={UserTimesheetEdit}/>
+          ,<Resource name="sentiment" options={{ label: 'Sentiment' }} list={UserSentimentList} edit={UserSentimentEdit}/>
+
         ];
         if (permissions === 'user') return [
           <Resource name="users" options={{ label: 'Anagrafica' }} list={UserList} show={UserShow} create={UserCreate} edit={UserEdit} icon={PeopleIcon} />,
